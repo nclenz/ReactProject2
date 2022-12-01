@@ -2,10 +2,11 @@ import Navbar from "../Navbar/Navbar";
 import { useState, useEffect } from "react";
 import dataCode from "../data/dataCode.json";
 import Loader from "../components/Loader";
+import HomePage from "./HomePage";
 
 
 
-const EventPage = () => {
+const EventPage = ({addWish, wish}) => {
     const [event, setEvent] = useState([]);
     const [page, setPage] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +49,18 @@ const EventPage = () => {
             }
         })
     },[page, countryCode])
+    
+    const handleWish = (item) => () => {
+        addWish(item);
+      };
+
+
+    let text = "Add to Wishlist";
+    if (handleWish === true) {
+      text = "Wished";
+    }
+
+
 
     if(!isLoaded){
         return <Loader/>
@@ -91,6 +104,7 @@ const EventPage = () => {
                  }
                 <p className="event-name">{x.name}</p>
                 <p >{x.dates.start.localDate}</p>
+                <button onClick={handleWish(x)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow">{text}</button>
             </div>
             ))}  
         </div>
