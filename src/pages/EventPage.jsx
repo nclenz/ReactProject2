@@ -6,11 +6,12 @@ import HomePage from "./HomePage";
 
 
 
-const EventPage = ({addWish, wish}) => {
+const EventPage = ({addWish, wishlist}) => {
     const [event, setEvent] = useState([]);
     const [page, setPage] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [countryCode, setCountryCode] = useState('US');
+
 
     const apiKey = "I2tZNbEtauHghOYF8Z22rOMU0VGJmLQt";
 
@@ -29,12 +30,12 @@ const EventPage = ({addWish, wish}) => {
     const handlePage = (toPage) => {
         setPage(toPage)
     }
-  
+    
     let num = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 10; i >= 1; i--) {
         num.push(i);
     }
-
+    
     useEffect(() =>{
         fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=${countryCode}&page=${page}&size=20&apikey=${apiKey}`)
         .then(res => {
@@ -43,22 +44,26 @@ const EventPage = ({addWish, wish}) => {
         .then(data=>{
             setIsLoaded(true)
             if (data._embedded !== undefined) { 
-            setEvent(data._embedded.events)
+                setEvent(data._embedded.events)
             } else {
                 console.log("No events available")
             }
         })
     },[page, countryCode])
     
-    const handleWish = (item) => () => {
-        addWish(item);
-      };
+
+        const handleWish = (item) => { 
+            addWish(item);
+            // if(wishlist.includes(item)){
+                console.log(item)
+            // }
+          };
 
 
-    let text = "Add to Wishlist";
-    if (handleWish === true) {
-      text = "Wished";
-    }
+
+    // if (handleWish === true) {
+    //   text = "Wished";
+    // }
 
 
 
@@ -79,21 +84,24 @@ const EventPage = ({addWish, wish}) => {
 
         <div className="mr-6">
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-    onClick={handlePreviousPage}>Prev</button>
+        onClick={handleNextPage}>Next</button>
+
+        
     
     {num.map((pageNum) => (
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
         onClick={() => handlePage(pageNum)}
         key={pageNum}>{pageNum}</button>
+
         ))}
+            <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+    onClick={handlePreviousPage}>Prev</button>
         
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-        onClick={handleNextPage}>Next</button>
         </div>
             </span> 
 
         <div className="layout">
-        {event.map((x) =>(
+        {event.length > 0 && event.map((x) =>(
             <div key={x.id} className="grid-item" >
                 {<a href={x.url} target="_blank" rel="noopener noreferrer">
                     <img  className="cursor-pointer" 
@@ -104,15 +112,12 @@ const EventPage = ({addWish, wish}) => {
                  }
                 <p className="event-name">{x.name}</p>
                 <p >{x.dates.start.localDate}</p>
-                <button onClick={handleWish(x)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow">{text}</button>
+                <button onClick={() => handleWish(x)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow">{wishlist.includes(x) ? "Wished" : "Add to Wishlist"}</button>
             </div>
             ))}  
         </div>
 
-    <span className="float-right">
-        
 
-    </span>
     </>
      );
 }

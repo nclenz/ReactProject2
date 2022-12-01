@@ -1,15 +1,15 @@
 import Navbar from "../Navbar/Navbar";
 
-const Wishlist = ({wish, delWish}) => {
+const Wishlist = ({wishlist, delWish}) => {
 
     return  (
     
     <>
 
     <Navbar/>
-    <h1>Favs</h1>
+    <h1>Wishlist</h1>
     <div className="layout">
-        {wish.map((item) =>(
+        {wishlist.map((item) =>(
             <div key={item.id} className="inline" >
                 {<a href={item.url} target="_blank" rel="noopener noreferrer">
                     <img  className="cursor-pointer" 
@@ -18,7 +18,7 @@ const Wishlist = ({wish, delWish}) => {
                  </a>
                  }
                 
-                <button onClick={() => delWish(item)} >Delete</button>
+                <button onClick={() => delWish(item)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow" >Delete</button>
             </div>
             ))}  
         </div>

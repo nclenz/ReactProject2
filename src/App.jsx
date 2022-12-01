@@ -9,12 +9,21 @@ import Wishlist from "./pages/Wishlist";
 
 function App() {
   // const apiKey = "I2tZNbEtauHghOYF8Z22rOMU0VGJmLQt";
-  const [wish, setWish] = useState([]);
+  const [wishlist, setWish] = useState([]);
 
-  const addWish = (item) => setWish([...wish, item]);
+  const addWish = (item) => {
+    // setWish([...wishlist, item])
+    // console.log(item)
+    if(wishlist.includes(item)){
+      // console.log("duplicate Item")
+    } else{
+      setWish([...wishlist, item]);
+    }
+    
+  }
 
   const delWish = (item) => {
-    const filteredWish = wish.filter((wishItem) =>{
+    const filteredWish = wishlist.filter((wishItem) =>{
       return wishItem !== item
     })
     setWish(filteredWish);
@@ -25,9 +34,9 @@ return(
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/events" element={<EventPage wish={wish} addWish={addWish}/>} />
-        <Route path="/attractions" element={<AttractionPage/>} />
-        <Route path="wish" element={<Wishlist wish={wish} delWish={delWish} />} />
+        <Route path="/events" element={<EventPage wishlist={wishlist} addWish={addWish}/>} />
+        <Route path="/attractions" element={<AttractionPage wishlist={wishlist} addWish={addWish}/>} />
+        <Route path="wish" element={<Wishlist wishlist={wishlist} delWish={delWish} />} />
         
       </Routes>
     </BrowserRouter>
