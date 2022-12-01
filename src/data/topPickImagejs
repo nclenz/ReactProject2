@@ -1,0 +1,27 @@
+export const imageData = [
+    {
+        id: 1,
+        img: "https://s1.ticketm.net/dam/a/083/b6380c36-fe75-4a92-ade3-942069593083_1790601_CUSTOM.jpg"
+    },
+    {
+        id: 2,
+        img: "https://s1.ticketm.net/dam/a/1d1/47cc9b10-4904-4dec-b1d6-539e44a521d1_1825531_RETINA_PORTRAIT_3_2.jpg"
+    },
+    {
+        id: 3,
+        img: "https://s1.ticketm.net/dam/a/846/dc2062db-d938-489b-a6fd-6e6d266eb846_1776461_CUSTOM.jpg"
+    },
+    {
+        id: 4,
+        img: "https://s1.ticketm.net/dam/a/0df/8863eea3-e643-4c22-84df-bf7a195840df_1688971_ARTIST_PAGE_3_2.jpg"
+    },
+    {
+        id: 5,
+        img: "https://s1.ticketm.net/dam/a/cf5/f85e870d-3003-40ec-9161-dd3451b50cf5_1726651_CUSTOM.jpg"
+    },
+    {
+        id: 6,
+        img: "https://s1.ticketm.net/dam/a/67c/27e4785a-1ac7-4a3b-a7e5-f882dd84967c_1701761_ARTIST_PAGE_3_2.jpg"
+    },
+
+]

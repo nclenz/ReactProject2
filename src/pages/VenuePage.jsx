@@ -5,8 +5,8 @@ import Loader from "../components/Loader";
 
 
 
-const EventPage = () => {
-    const [event, setEvent] = useState([]);
+const VenuePage = () => {
+    const [venue, setVenue] = useState([]);
     const [page, setPage] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [countryCode, setCountryCode] = useState('US');
@@ -35,20 +35,21 @@ const EventPage = () => {
     }
 
     useEffect(() =>{
-        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=${countryCode}&page=${page}&size=20&apikey=${apiKey}`)
+        fetch(`https://app.ticketmaster.com/discovery/v2/venues.json?countryCode=${countryCode}&page=${page}&size=20&apikey=${apiKey}`)
         .then(res => {
             return res.json();
         })
         .then(data=>{
             setIsLoaded(true)
             if (data._embedded !== undefined) { 
-            setEvent(data._embedded.events)
+            setVenue(data._embedded.venues)
             } else {
-                console.log("No events available")
+                console.log("No information available")
             }
         })
     },[page, countryCode])
 
+    console.log(venue)
     if(!isLoaded){
         return <Loader/>
       }
@@ -56,15 +57,14 @@ const EventPage = () => {
         <>
          <Navbar/>
 
-         <span className="inline">
-        <select  name="CountryCode" onChange={(e) =>setCountryCode(e.target.value.split(',').pop())} className="mt-6 ml-6">
+         <span >
+        <select  name="CountryCode" onChange={(e) =>setCountryCode(e.target.value.split(',').pop())}>
             <option default>Select Your Country</option>
            {dataCode.map((x) =>(
                 <option key={x.Code}>{x.Name},{x.Code}</option>
                 ))}
         </select>
-
-        <div className="mr-6">
+            
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
     onClick={handlePreviousPage}>Prev</button>
     
@@ -76,11 +76,10 @@ const EventPage = () => {
         
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
         onClick={handleNextPage}>Next</button>
-        </div>
             </span> 
 
-        <div className="layout">
-        {event.map((x) =>(
+        {/* <div className="layout">
+        {venue.map((x) =>(
             <div key={x.id} className="grid-item" >
                 {<a href={x.url} target="_blank" rel="noopener noreferrer">
                     <img  className="cursor-pointer" 
@@ -90,17 +89,14 @@ const EventPage = () => {
                  </a>
                  }
                 <p className="event-name">{x.name}</p>
-                <p >{x.dates.start.localDate}</p>
+               
             </div>
             ))}  
-        </div>
+        </div> */}
 
-    <span className="float-right">
-        
-
-    </span>
+   
     </>
      );
 }
  
-export default EventPage;
+export default VenuePage;
